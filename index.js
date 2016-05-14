@@ -1,7 +1,7 @@
 # Shulte-tables
 
 var app = {
-    currentLevel: 1,
+    currentLevel: 2,
     level: [1, 2, 3, 4, 5],
     cellsAmount: 5,
     numbers: [],
@@ -11,8 +11,8 @@ var app = {
         app.drawSimpleTable();
     },
     drawSimpleTable: function(){
-        for(var i = 0; i < app.cellsAmount * app.cellsAmount; i++){ // Create the array of numbers.
-             app.numbers.push(i);       
+        for(var l = 0; l < app.cellsAmount * app.cellsAmount; l++){ // Create the array of numbers.
+             app.numbers.push(l);       
         }
         // Randomise numbers in the array.
         app.numbers = app.numbers.sort(function(){return .5 - Math.random()});
@@ -28,14 +28,20 @@ var app = {
                 var t = document.createTextNode(app.numbers[k]);
                 td.appendChild(t);
                 td.id = app.numbers[k]; // Add id to every cell.
-                
+               // alert(td.id);
                 //Depending on level, change the style of cells.
-                switch(app.level){
+                switch(app.currentLevel){
                     case 1:
                         
                         break;
                     case 2:
-                        
+                        if(td.id % 5 == 0){
+                            td.style.background = "#fbb";
+                        }else if (td.id % 3 == 0){
+                            td.style.background = "#5f9";
+                        }else if(td.id % 2 == 0){
+                            td.style.background = "#59f";
+                        }
                         break;
                     case 3:
                         
