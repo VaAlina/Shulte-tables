@@ -1,7 +1,6 @@
 # Shulte-tables
-
 var app = {
-    currentLevel: 2,
+    currentLevel: 3,
     level: [1, 2, 3, 4, 5],
     cellsAmount: 5,
     numbers: [],
@@ -44,6 +43,17 @@ var app = {
                         }
                         break;
                     case 3:
+                        if(td.id % 5 == 0){
+                            td.setAttribute("class", "stripes");
+                            td.style.fontWeight = "bold";
+                        }else if (td.id % 3 == 0){
+                            td.style.background = "#006400"; // Green.
+                        }else if(td.id % 2 == 0){
+                            td.style.background = "#8B0000"; // Bordo.
+                            td.setAttribute("class", "font1");
+                        }else{
+                            td.setAttribute("class", "font2");
+                        }
                         
                         break;
                     case 4: 
