@@ -30,31 +30,13 @@ var app = {
                // alert(td.id);
                 //Depending on level, change the style of cells.
                 switch(app.currentLevel){
-                    case 1:
-                        
+                    case 1:// Default styles.                       
                         break;
-                    case 2:
-                        if(td.id % 5 == 0){
-                            td.style.background = "#fbb";
-                        }else if (td.id % 3 == 0){
-                            td.style.background = "#5f9";
-                        }else if(td.id % 2 == 0){
-                            td.style.background = "#59f";
-                        }
+                    case 2: // Different cells background.
+                        app.styleLevel_2(td);
                         break;
-                    case 3:
-                        if(td.id % 5 == 0){
-                            td.setAttribute("class", "stripes");
-                            td.style.fontWeight = "bold";
-                        }else if (td.id % 3 == 0){
-                            td.style.background = "#006400"; // Green.
-                        }else if(td.id % 2 == 0){
-                            td.style.background = "#8B0000"; // Bordo.
-                            td.setAttribute("class", "font1");
-                        }else{
-                            td.setAttribute("class", "font2");
-                        }
-                        
+                    case 3:// Stripes and few fonts.
+                        app.styleLevel_3(td);                        
                         break;
                     case 4: 
                         
@@ -70,12 +52,28 @@ var app = {
         // Difficult means both for user and programmer, who creates it.
     },
     
-    styleLevel_2: function(){ // Make some cells different color.
-    
+    styleLevel_2: function(a){ // Make some cells different color.
+        if(a.id % 5 == 0){
+            a.style.background = "#fbb";
+        }else if (a.id % 3 == 0){
+            a.style.background = "#5f9";
+        }else if(a.id % 2 == 0){
+            a.style.background = "#59f";
+        }    
     },
     
-    styleLevel_3: function(){ // Different fonts and cells sizes.
-    
+    styleLevel_3: function(a){ // Different fonts and cells sizes.
+        if(a.id % 5 == 0){
+            a.setAttribute("class", "stripes");
+            a.style.fontWeight = "bold";
+        }else if (a.id % 3 == 0){
+            a.style.background = "#006400"; // Green.
+        }else if(a.id % 2 == 0){
+            a.style.background = "#8B0000"; // Bordo.
+            a.setAttribute("class", "font1");
+        }else{
+            a.setAttribute("class", "font2");
+        }   
     },
     
     styleLevel_4: function(){
