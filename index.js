@@ -1,12 +1,15 @@
 var app = {
-    currentLevel: 5,
+    currentLevel: 4,
     level: [1, 2, 3, 4, 5],
     cellsAmount: 9,
     numbers: [],
+    time: 0,
+    timeRunning: true,
     
     run: function(){
         app.displayData();
         app.drawSimpleTable();
+        app.runTimer();
     },
     drawSimpleTable: function(){
         for(var l = 0; l < app.cellsAmount * app.cellsAmount; l++){ // Create the array of numbers.
@@ -81,18 +84,25 @@ var app = {
         }   
     },
     
-    styleLevel_4: function(a){ // More fonts. Rewrite this function.
+    styleLevel_4: function(a){ // Delete cells with it's backgrounds at all.
+        a.setAttribute("class", "stripes");
+        a.style.fontWeight = "bold";
+        a.style.borderRadius = "25px";
+        //Randomly rotate numbers. 
         if(a.id % 5 === 0){
             a.setAttribute("class", "stripes");
-            a.style.fontWeight = "bold";
-        }else if (a.id % 3 === 0){
-            a.style.background = "#008B8B";
-        }else if(a.id % 2 === 0){
+            app.rotate(a, Math.floor(Math.random()*100)); //Positive rotation.
+        }else if(a.id % 3 === 0){//Add circular gradient from the cell center.
+            a.style.background = "#CD5C5C"; 
+            a.setAttribute("class", "nothing");
+        }else if(a.id % 2 === 0 && a.id % 5 !== 0){//Change color of some numbers to random.
+            app.rotate(a, Math.floor(Math.random()*-100)); //Negative rotation.
             a.style.background = "#2F4F4F"; 
-            a.setAttribute("class", "font6");
+            a.setAttribute("class", "font1");
         }else{
-            a.setAttribute("class", "font4");
-        }    
+            a.setAttribute("class", "font2");
+            a.style.background = "#FFF8DC";
+        }       
     },
     
     styleLevel_5: function(a){ // Delete cells with it's backgrounds at all.
@@ -113,6 +123,17 @@ var app = {
             a.setAttribute("class", "white-outline"); 
         }       
     },
+    
+    styleLevel_6: function(a){ // Make some cells different color.
+        if(a.id % 5 === 0){
+            a.style.background = "#fbb";
+        }else if (a.id % 3 === 0){
+            a.style.background = "#5f9";
+        }else if(a.id % 2 === 0){
+            a.style.background = "#59f";
+        }    
+    },
+    
     rotate: function(what, how){
         what.WebkitTransform =  "rotate("+how+"deg)";// Code for Chrome, Safari, Opera
         what.style.msTransform = "rotate("+how+"deg)";// Code for IE9
@@ -121,6 +142,13 @@ var app = {
     
     styleLevel_6: function(a){
         // Add random colorfull stripes in body.
+    },
+    runTimer: function(){ //Test it.
+        while(timeRunning){
+            setInterval(function(){ app.time = +1; }, 1000);
+            // Display it after the game has finished.
+        }
+        return app.time.toString('H:mm:ss');
     },
     
     getUserInput: function(){
