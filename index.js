@@ -1,7 +1,7 @@
 var app = {
     currentLevel: 7,
     level: [0, 1, 2, 3, 4, 5, 6, 7],
-    cellsAmount: 3,
+    cellsAmount: 5,
     numbers: [],
     userNumbers: [],
     time: 0,
@@ -151,6 +151,7 @@ var app = {
             app.rotate(a, Math.floor(Math.random()*-100)); //Negative rotation.
             a.setAttribute("class", "font4");
             a.setAttribute("class", "grad2");
+            a.style.background = "#"+app.getRandomColor();
         }else{
             a.style.background = "#"+Math.floor(Math.random()*1000);
             a.setAttribute("class", "white-outline"); 
@@ -158,16 +159,15 @@ var app = {
     },
     
     styleLevel_6: function(a){ // Make some cells different color.
+        a.style.background = "#"+app.getRandomColor();
         a.style.transform = "rotate("+Math.floor(Math.random()*100)+"deg)";
         var deg = Math.floor(Math.random()*30);
         if(a.id % 5 === 0){
             a.style.background = "#fbb";
             a.style.transform = "skew("+deg+"deg,"+deg+"deg)";
         }else if (a.id % 3 === 0){
-            a.style.background = "#5f9";
             a.style.transform = "rotateX(180deg)";
         }else if(a.id % 2 === 0){
-            a.style.background = "#59f";
             a.style.transform = "rotateY(180deg)";
             
         }    
@@ -175,17 +175,15 @@ var app = {
     /*The hell begins here!!! Mua-ha-ha!!!*/
      styleLevel_7: function(a){ // Make some cells different color.
         a.style.transform = "rotate("+Math.floor(Math.random()*100)+"deg)";
+        a.style.background = "#"+app.getRandomColor();
         var deg = Math.floor(Math.random()*30);
         var degBig = Math.floor(Math.random()*180);
         if(a.id % 5 === 0){
-            a.style.background = "#fbb";
             a.style.transform = "skew("+deg+"deg,"+deg+"deg)";
         }else if (a.id % 3 === 0){
-            a.style.background = "#5f9";
             a.style.transform = "rotateX(180deg)";
             a.setAttribute("class", "font3");
         }else if(a.id % 2 === 0){
-            a.style.background = "#59f";
             a.style.transform = "rotateY(180deg)";       
         }else{
             a.style.transform = "rotateZ("+degBig+"deg)"; 
@@ -194,6 +192,15 @@ var app = {
     },
     styleLevel_8: function(a){
         // Add animation.
+    },
+    
+    getRandomColor: function(){
+        var colorSet = [8, 9, "a", "b", "c", "d", "e", "f" ],
+            newColor=[];
+        for(var j = 0; j < 3; j++){
+            newColor.push(colorSet[Math.floor(Math.random()*colorSet.length)]);
+        }
+        return newColor.join("");
     },
     
     rotate: function(what, how){
