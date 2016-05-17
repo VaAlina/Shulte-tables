@@ -1,10 +1,13 @@
 var app = {
-    currentLevel: 4,
-    level: [1, 2, 3, 4, 5],
-    cellsAmount: 9,
+    currentLevel: 6,
+    level: [0, 1, 2, 3, 4, 5, 6, 7],
+    cellsAmount: 3,
     numbers: [],
+    userNumbers: [],
     time: 0,
     timeRunning: true,
+    userMistakes: 0,
+    userMistakesPersent: 0,
     
     run: function(){
         app.displayData();
@@ -29,9 +32,17 @@ var app = {
                 var t = document.createTextNode(app.numbers[k]);
                 td.appendChild(t);
                 td.id = app.numbers[k]; // Add id to every cell.
+                
+                document.getElementById(td.id).addEventListener("click", function(){
+                    app.compare(td.id);
+                });
+                
                 //Depending on level, change the style of cells.
                 switch(app.currentLevel){
-                    case 1:// Default styles.                       
+                    case 0:// Default styles.                       
+                        break;
+                    case 1: // Different cells background.
+                        app.styleLevel_1(td);
                         break;
                     case 2: // Different cells background.
                         app.styleLevel_2(td);
@@ -48,6 +59,9 @@ var app = {
                     case 6: 
                         app.styleLevel_6(td);   
                         break;
+                    case 7: 
+                        app.styleLevel_7(td);   
+                        break;
                     default:
                         app.styleLevel_2(td);
                 }
@@ -55,10 +69,29 @@ var app = {
         }
     },
     
-    drawDifficultTable: function(){
-        // Difficult means both for user and programmer, who creates it.
-    },
+	compare: function(id){
+		app.userNumbers.push(id); //Put id in the array of userNumbers.numbers.
+		app.userNumbers.sort(); //Sort array.	
+    app.userMistakesPersent = app.userNumbers / 100 * app.userMistakes;
     
+    if(app.userNumbers[app.userNumbers.length-2] != app.userNumbers[app.userNumbers.length-1]-1 && app.userNumbers.length != 0){
+        app.userMistakes++;
+        if(app.userNumbers.length == app.userMistakes + app.userNumbers-1){
+            alert("Game over! You made "+app.userMistakes+" mistakes. It's "+app.userMistakesPersent+"%.");
+        }
+    }
+    
+    if(app.cellsAmount * app.cellsAmount == app.userNumbers.length){
+            alert("Game over! You made "+app.userMistakes+" mistakes. It's "+app.userMistakesPersent+"%.");
+    }
+	},
+    styleLevel_1: function(a){
+        // Add random colorfull stripes in body.
+        if(a.id % 2 === 0){
+            a.style.transform = "rotate(7deg)";
+            //document.getElementById("myDIV").style.transform = "rotate(7deg)"; 
+        }
+    },
     styleLevel_2: function(a){ // Make some cells different color.
         if(a.id % 5 === 0){
             a.style.background = "#fbb";
@@ -125,12 +158,18 @@ var app = {
     },
     
     styleLevel_6: function(a){ // Make some cells different color.
+        a.style.transform = "rotate("+Math.floor(Math.random()*100)+"deg)";
+        var deg = Math.floor(Math.random()*30);
         if(a.id % 5 === 0){
             a.style.background = "#fbb";
+            a.style.transform = "skew("+deg+"deg,"+deg+"deg)";
         }else if (a.id % 3 === 0){
             a.style.background = "#5f9";
+            a.style.transform = "rotateX(180deg)";
         }else if(a.id % 2 === 0){
             a.style.background = "#59f";
+            a.style.transform = "rotateY(180deg)";
+            
         }    
     },
     
@@ -140,30 +179,13 @@ var app = {
         what.style.transform =  "rotate("+how+"deg)";
     },
     
-    styleLevel_6: function(a){
-        // Add random colorfull stripes in body.
-    },
     runTimer: function(){ //Test it.
-        while(timeRunning){
-            setInterval(function(){ app.time = +1; }, 1000);
-            // Display it after the game has finished.
-        }
-        return app.time.toString('H:mm:ss');
-    },
-    
-    getUserInput: function(){
-    
-    },
-    compareUserInputWithTarget: function(){
-    
+
     },
     displayData: function(){
         var gameLevel = document.querySelector("#level");
         var data = document.createTextNode(app.currentLevel);
         gameLevel.appendChild(data);
-    },
-    test: function(){
-        alert("works");
     }
 };
 app.run();
