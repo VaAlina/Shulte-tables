@@ -1,5 +1,5 @@
 var app = {
-    currentLevel: 6,
+    currentLevel: 7,
     level: [0, 1, 2, 3, 4, 5, 6, 7],
     cellsAmount: 3,
     numbers: [],
@@ -171,6 +171,29 @@ var app = {
             a.style.transform = "rotateY(180deg)";
             
         }    
+    },
+    /*The hell begins here!!! Mua-ha-ha!!!*/
+     styleLevel_7: function(a){ // Make some cells different color.
+        a.style.transform = "rotate("+Math.floor(Math.random()*100)+"deg)";
+        var deg = Math.floor(Math.random()*30);
+        var degBig = Math.floor(Math.random()*180);
+        if(a.id % 5 === 0){
+            a.style.background = "#fbb";
+            a.style.transform = "skew("+deg+"deg,"+deg+"deg)";
+        }else if (a.id % 3 === 0){
+            a.style.background = "#5f9";
+            a.style.transform = "rotateX(180deg)";
+            a.setAttribute("class", "font3");
+        }else if(a.id % 2 === 0){
+            a.style.background = "#59f";
+            a.style.transform = "rotateY(180deg)";       
+        }else{
+            a.style.transform = "rotateZ("+degBig+"deg)"; 
+            a.setAttribute("class", "font4");
+        }    
+    },
+    styleLevel_8: function(a){
+        // Add animation.
     },
     
     rotate: function(what, how){
