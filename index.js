@@ -1,11 +1,12 @@
 var app = {
-    currentLevel: 7,
-    level: [0, 1, 2, 3, 4, 5, 6, 7],
+    currentLevel: 2,
+    level: [1, 2, 3, 4, 5],
     cellsAmount: 5,
     numbers: [],
     userNumbers: [],
     time: 0,
     timeRunning: true,
+    userCorrect: 0,
     userMistakes: 0,
     userMistakesPersent: 0,
     
@@ -34,10 +35,10 @@ var app = {
                 td.id = app.numbers[k]; // Add id to every cell.
                 
                 document.getElementById(td.id).addEventListener("click", function(){
-                    app.compare(td.id);
+                    app.compare(this.id);
                 });
                 
-                //Depending on level, change the style of cells.
+               //Depending on level, change the style of cells.
                 switch(app.currentLevel){
                     case 0:// Default styles.                       
                         break;
@@ -72,20 +73,25 @@ var app = {
 	compare: function(id){
 		app.userNumbers.push(id); //Put id in the array of userNumbers.numbers.
 		app.userNumbers.sort(); //Sort array.	
-    app.userMistakesPersent = app.userNumbers / 100 * app.userMistakes;
+		app.userMistakesPersent = app.userMistakes / app.userNumbers.length * 100;
     
-    if(app.userNumbers[app.userNumbers.length-2] != app.userNumbers[app.userNumbers.length-1]-1 && app.userNumbers.length != 0){
+    if(app.userNumbers[app.userNumbers.length-2] != app.userNumbers[app.userNumbers.length-1]-1 && app.userNumbers.length > 1 || app.userNumbers[0] != 0){
         app.userMistakes++;
-        if(app.userNumbers.length == app.userMistakes + app.userNumbers-1){
-            alert("Game over! You made "+app.userMistakes+" mistakes. It's "+app.userMistakesPersent+"%.");
+        if(app.userNumbers.length == app.userMistakes.length + app.userCorrect.length){
+            alert("Game over! You made "+app.userMistakes+" mistakes. It's "+app.userMistakesPersent.toFixed(2)+"%.");
         }
+    }else{
+        app.userCorrect++;
     }
     
     if(app.cellsAmount * app.cellsAmount == app.userNumbers.length){
-            alert("Game over! You made "+app.userMistakes+" mistakes. It's "+app.userMistakesPersent+"%.");
+        alert("Game over! You made "+app.userMistakes+" mistakes. It's "+app.userMistakesPersent.toFixed(2)+"%.");
     }
 	},
-    styleLevel_1: function(a){
+    
+	
+	
+     styleLevel_1: function(a){
         // Add random colorfull stripes in body.
         if(a.id % 2 === 0){
             a.style.transform = "rotate(7deg)";
